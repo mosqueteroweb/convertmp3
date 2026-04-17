@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert MP3 PWA</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#1a1a2e">
+</head>
+<body>
+    <main class="container">
+        <h1>Convertidor MP3</h1>
+        <p>Pega la URL del video de YouTube</p>
+
+        <form id="convert-form">
+            <input type="url" id="youtube-url" placeholder="https://www.youtube.com/watch?v=..." required>
+            <button type="submit" id="submit-btn">Descargar Audio</button>
+        </form>
+
+        <div id="status-container" class="hidden">
+            <div class="loader"></div>
+            <p id="status-text">Procesando y descargando...</p>
+        </div>
+
+        <div id="error-container" class="hidden error">
+            <p id="error-text"></p>
+        </div>
+    </main>
+
+    <script src="/static/app.js"></script>
+    <script>
+        // Registrar Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registrado exitosamente con el scope: ', registration.scope);
+                    })
+                    .catch(err => {
+                        console.log('Fallo al registrar el ServiceWorker: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
